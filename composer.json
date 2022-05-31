@@ -1,9 +1,10 @@
 {
     "name": "coenschutte/cronly-wrapper",
-    "description": "This is my package cronly-wrapper",
+    "description": "A wrapper for the Cronly API in PHP",
     "keywords": [
         "CoenSchutte",
-        "cronly-wrapper"
+        "cronly-wrapper",
+        "Cronly"
     ],
     "homepage": "https://github.com/coenschutte/cronly-wrapper",
     "license": "MIT",
