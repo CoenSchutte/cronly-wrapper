@@ -6,9 +6,7 @@ class CronlyWrapper
 {
     private $apiKey = '';
 
-    static $BASE_URL = 'http://35.180.188.76/api/';
-
-
+    public static $BASE_URL = 'http://35.180.188.76/api/';
 
     /**
      * Constructs the CronlyWrapper object.
@@ -19,7 +17,7 @@ class CronlyWrapper
      */
     public function __construct($apiKey)
     {
-        if (!is_string($apiKey) || empty($apiKey)) {
+        if (! is_string($apiKey) || empty($apiKey)) {
             throw new \InvalidArgumentException("You must provide an API key.");
         }
 
@@ -49,7 +47,6 @@ class CronlyWrapper
     {
         return $this->apiKey;
     }
-
 
     /**
      * Gets all monitors.
@@ -90,8 +87,6 @@ class CronlyWrapper
     {
         return $this->delete('monitors/' . $monitorId);
     }
-
-
 
     /**
      * Gets all certificates.
@@ -185,7 +180,6 @@ class CronlyWrapper
         return $this->delete('projects/' . $projectId);
     }
 
-
     /**
      * Gets all users.
      *
@@ -212,18 +206,17 @@ class CronlyWrapper
         return $this->get('users/' . $userId);
     }
 
-
     private function get($endpoint)
     {
         $curl = curl_init();
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => self::$BASE_URL . $endpoint,
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 'Authorization: Bearer ' . $this->apiKey,
-                'Content-Type: application/json'
-            )
-        ));
+                'Content-Type: application/json',
+            ],
+        ]);
         $response = curl_exec($curl);
         curl_close($curl);
 
@@ -233,15 +226,15 @@ class CronlyWrapper
     private function delete($endpoint)
     {
         $curl = curl_init();
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => self::$BASE_URL . $endpoint,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 'Authorization: Bearer ' . $this->apiKey,
-                'Content-Type: application/json'
-            )
-        ));
+                'Content-Type: application/json',
+            ],
+        ]);
         $response = curl_exec($curl);
         curl_close($curl);
 
@@ -251,15 +244,15 @@ class CronlyWrapper
     private function post($endpoint)
     {
         $curl = curl_init();
-        curl_setopt_array($curl, array(
+        curl_setopt_array($curl, [
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => self::$BASE_URL . $endpoint,
             CURLOPT_POST => 1,
-            CURLOPT_HTTPHEADER => array(
+            CURLOPT_HTTPHEADER => [
                 'Authorization: Bearer ' . $this->apiKey,
-                'Content-Type: application/json'
-            )
-        ));
+                'Content-Type: application/json',
+            ],
+        ]);
         $response = curl_exec($curl);
         curl_close($curl);
 
