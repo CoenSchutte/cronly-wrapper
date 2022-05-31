@@ -6,7 +6,7 @@ class CronlyWrapper
 {
     private $apiKey = '';
 
-    public static $BASE_URL = 'http://35.180.188.76/api/';
+    public static $BASE_URL = 'https://cronly.app/api/';
 
     /**
      * Constructs the CronlyWrapper object.
@@ -17,7 +17,7 @@ class CronlyWrapper
      */
     public function __construct($apiKey)
     {
-        if (! is_string($apiKey) || empty($apiKey)) {
+        if (!is_string($apiKey) || empty($apiKey)) {
             throw new \InvalidArgumentException("You must provide an API key.");
         }
 
@@ -75,6 +75,51 @@ class CronlyWrapper
     }
 
     /**
+     * Creates a monitor.
+     *
+     * @param string $name The name of the monitor.
+     * @param string $timezone The timezone of the monitor.
+     * @param string $schedule The schedule of the monitor.
+     * @param int $duration The duration of the monitor.
+     * @param int $projectId The project id of the monitor.
+     *
+     * @return JSON The JSON response with all monitors for the user.
+     *
+     * @api
+     */
+    public function createMonitor($name, $timezone, $schedule, $duration, $projectId = null)
+    {
+
+        if (!is_string($name) || empty($name)) {
+            throw new \InvalidArgumentException("You must provide a name.");
+        }
+
+        if (!is_string($timezone) || empty($timezone)) {
+            throw new \InvalidArgumentException("You must provide a timezone.");
+        }
+
+        if (!is_string($schedule) || empty($schedule)) {
+            throw new \InvalidArgumentException("You must provide a schedule.");
+        }
+
+        if (!is_int($duration) || $duration < 1) {
+            throw new \InvalidArgumentException("You must provide a duration.");
+        }
+
+        if ($projectId !== null && !is_int($projectId)) {
+            throw new \InvalidArgumentException("If you provide a project id it must be an integer.");
+        }
+
+        $endpoint = 'monitors?name=' . urlencode($name) . '&timezone=' . urlencode($timezone) . '&schedule=' . urlencode($schedule) . '&duration=' . urlencode($duration);
+
+        if ($projectId !== null) {
+            $endpoint .= '&project_id=' . urlencode($projectId);
+        }
+
+        return $this->post($endpoint);
+    }
+
+    /**
      * Deletes a monitor by ID.
      *
      * @param int $monitorId The ID of the monitor.
@@ -115,6 +160,42 @@ class CronlyWrapper
     }
 
     /**
+     * Creates a certificate monitor.
+     *
+     * @param string $name The name of the monitor.
+     * @param string $timezone The timezone of the monitor.
+     * @param string $schedule The schedule of the monitor.
+     * @param int $duration The duration of the monitor.
+     * @param int $projectId The project id of the monitor.
+     *
+     * @return JSON The JSON response with all monitors for the user.
+     *
+     * @api
+     */
+    public function createCertificate($hostname, $port = 443, $projectId = null)
+    {
+        if (!is_string($hostname) || empty($hostname)) {
+            throw new \InvalidArgumentException("You must provide a hostname.");
+        }
+
+        if ($port < 1) {
+            throw new \InvalidArgumentException("You must provide a port.");
+        }
+
+        if ($projectId !== null && !is_int($projectId)) {
+            throw new \InvalidArgumentException("If you provide a project id it must be an integer.");
+        }
+
+        $endpoint = 'certificates?hostname=' . urlencode($hostname) . '&port=' . urlencode($port);
+
+        if ($projectId !== null) {
+            $endpoint .= '&project_id=' . urlencode($projectId);
+        }
+
+        return $this->post($endpoint);
+    }
+
+    /**
      * Deletes a certificate by ID.
      *
      * @param int $certificateId The ID of the certificate.
@@ -131,13 +212,16 @@ class CronlyWrapper
     /**
      * Gets all notifications.
      *
+     * @param int $page The page you want to view.
+     * @param int $perPage The amount of notifications per page.
+     * 
      * @return JSON The JSON response with all monitors.
-     *
+     * 
      * @api
      */
-    public function getAllNotifications()
+    public function getAllNotifications($page = 1, $perPage = 10)
     {
-        return $this->get('notifications');
+        return $this->get('notifications/?page=' . $page . '&per_page=' . $perPage);
     }
 
     /**
@@ -164,6 +248,24 @@ class CronlyWrapper
     public function getProject($projectId)
     {
         return $this->get('projects/' . $projectId);
+    }
+
+    /**
+     * Gets all monitors for a user.
+     *
+     * @param string $name The name of the project.
+     *
+     * @return JSON The JSON response with all monitors for the user.
+     *
+     * @api
+     */
+    public function createProject($name)
+    {
+        if (!is_string($name) || empty($name)) {
+            throw new \InvalidArgumentException("You must provide a name.");
+        }
+
+        return $this->post('projects?name=' . urlencode($name));
     }
 
     /**
