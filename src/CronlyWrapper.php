@@ -17,7 +17,7 @@ class CronlyWrapper
      */
     public function __construct($apiKey)
     {
-        if (!is_string($apiKey) || empty($apiKey)) {
+        if (! is_string($apiKey) || empty($apiKey)) {
             throw new \InvalidArgumentException("You must provide an API key.");
         }
 
@@ -89,24 +89,23 @@ class CronlyWrapper
      */
     public function createMonitor($name, $timezone, $schedule, $duration, $projectId = null)
     {
-
-        if (!is_string($name) || empty($name)) {
+        if (! is_string($name) || empty($name)) {
             throw new \InvalidArgumentException("You must provide a name.");
         }
 
-        if (!is_string($timezone) || empty($timezone)) {
+        if (! is_string($timezone) || empty($timezone)) {
             throw new \InvalidArgumentException("You must provide a timezone.");
         }
 
-        if (!is_string($schedule) || empty($schedule)) {
+        if (! is_string($schedule) || empty($schedule)) {
             throw new \InvalidArgumentException("You must provide a schedule.");
         }
 
-        if (!is_int($duration) || $duration < 1) {
+        if (! is_int($duration) || $duration < 1) {
             throw new \InvalidArgumentException("You must provide a duration.");
         }
 
-        if ($projectId !== null && !is_int($projectId)) {
+        if ($projectId !== null && ! is_int($projectId)) {
             throw new \InvalidArgumentException("If you provide a project id it must be an integer.");
         }
 
@@ -174,7 +173,7 @@ class CronlyWrapper
      */
     public function createCertificate($hostname, $port = 443, $projectId = null)
     {
-        if (!is_string($hostname) || empty($hostname)) {
+        if (! is_string($hostname) || empty($hostname)) {
             throw new \InvalidArgumentException("You must provide a hostname.");
         }
 
@@ -182,7 +181,7 @@ class CronlyWrapper
             throw new \InvalidArgumentException("You must provide a port.");
         }
 
-        if ($projectId !== null && !is_int($projectId)) {
+        if ($projectId !== null && ! is_int($projectId)) {
             throw new \InvalidArgumentException("If you provide a project id it must be an integer.");
         }
 
@@ -214,9 +213,9 @@ class CronlyWrapper
      *
      * @param int $page The page you want to view.
      * @param int $perPage The amount of notifications per page.
-     * 
+     *
      * @return JSON The JSON response with all monitors.
-     * 
+     *
      * @api
      */
     public function getAllNotifications($page = 1, $perPage = 10)
@@ -261,7 +260,7 @@ class CronlyWrapper
      */
     public function createProject($name)
     {
-        if (!is_string($name) || empty($name)) {
+        if (! is_string($name) || empty($name)) {
             throw new \InvalidArgumentException("You must provide a name.");
         }
 
