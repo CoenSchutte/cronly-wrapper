@@ -1,5 +1,5 @@
 
-# This is my package cronly-wrapper
+# A Cronly API wrapper in PHP
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/coenschutte/cronly-wrapper.svg?style=flat-square)](https://packagist.org/packages/coenschutte/cronly-wrapper)
 [![Total Downloads](https://img.shields.io/packagist/dt/coenschutte/cronly-wrapper.svg?style=flat-square)](https://packagist.org/packages/coenschutte/cronly-wrapper)
